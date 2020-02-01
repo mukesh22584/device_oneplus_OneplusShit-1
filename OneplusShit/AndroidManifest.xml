@@ -30,6 +30,7 @@
 	
     <protected-broadcast android:name="com.oneplus.shit.settings.UPDATE_SLIDER_SETTINGS" />
     <protected-broadcast android:name="com.oneplus.shit.settings.UPDATE_SLIDER_POSITION" />
+    <protected-broadcast android:name="com.oneplus.shit.settings.UPDATE_SETTINGS" />
 
     <application
         android:icon="@mipmap/ic_launcher_settings"
@@ -59,6 +60,14 @@
         </activity>
 
         <activity android:name="com.oneplus.shit.settings.KeyHandler" />		
+
+        <!-- OnePlus Gestures -->
+        <activity
+            android:name="com.oneplus.shit.settings.TouchscreenGestureSettings"
+            android:label="@string/touchscreen_gesture_settings_title"
+            android:theme="@style/AppTheme">
+        </activity>
+
         <!-- Display Calibration -->
         <activity
             android:name="com.oneplus.shit.settings.DisplayCalibration"

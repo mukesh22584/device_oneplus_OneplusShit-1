@@ -41,9 +41,14 @@ import com.oneplus.shit.settings.utils.FileUtils;
 
 import com.oneplus.shit.settings.dirac.DiracUtils;
 
+import com.oneplus.shit.settings.TouchscreenGestureSettings;
+
 import java.io.File;
 
 public class Startup extends BroadcastReceiver {
+
+    private static final String TAG = "BootReceiver";
+    private static final String ONE_TIME_TUNABLE_RESTORE = "hardware_tunable_restored";
 
     private void restore(String file, boolean enabled) {
         if (file == null) {
@@ -63,6 +68,7 @@ public class Startup extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, final Intent intent) {
+        TouchscreenGestureSettings.MainSettingsFragment.restoreTouchscreenGestureStates(context);
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         final String action = intent.getAction();
             ButtonSettingsActivity.restoreState(context);
@@ -83,5 +89,15 @@ public class Startup extends BroadcastReceiver {
         DisplayCalibration.restore(context);
         new DiracUtils(context).onBootCompleted();
         FileUtils.enableService(context);
+    }
+
+    private boolean hasRestoredTunable(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getBoolean(ONE_TIME_TUNABLE_RESTORE, false);
+    }
+
+    private void setRestoredTunable(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        preferences.edit().putBoolean(ONE_TIME_TUNABLE_RESTORE, true).apply();
     }
 }

@@ -20,14 +20,24 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import androidx.preference.PreferenceManager;
 import android.util.Log;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.FileReader;
+
+import com.oneplus.shit.settings.R;
 
 import com.oneplus.shit.settings.utils.FileUtils;
 
 class Utils {
 
-    private static final String TAG = "Utils";
+    private static final String TAG = Utils.class.getSimpleName();
 
     static void disableComponent(Context context, Class cls) {
         ComponentName name = new ComponentName(context, cls);
@@ -50,7 +60,26 @@ class Utils {
 
     static String getPreferenceString(Context context, String key) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return preferences.getString(key, (String) Constants.sNodeDefaultMap.get(key));
+        return preferences.getString(key, (String) ButtonConstants.sNodeDefaultMap.get(key));
     }
 
+    public static String getLocalizedString(final Resources res,
+                                            final String stringName,
+                                            final String stringFormat) {
+        final String name = stringName.toLowerCase().replace(" ", "_");
+        final String nameRes = String.format(stringFormat, name);
+        return getStringForResourceName(res, nameRes, stringName);
+    }
+
+    public static String getStringForResourceName(final Resources res,
+                                                  final String resourceName,
+                                                  final String defaultValue) {
+        final int resId = res.getIdentifier(resourceName, "string", "com.aosip.device.DeviceSettings");
+        if (resId <= 0) {
+            Log.e(TAG, "No resource found for " + resourceName);
+            return defaultValue;
+        } else {
+            return res.getString(resId);
+        }
+    }
 }
