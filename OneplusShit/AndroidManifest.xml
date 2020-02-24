@@ -29,6 +29,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
 	
     <protected-broadcast android:name="com.oneplus.shit.settings.UPDATE_SLIDER_SETTINGS" />
+    <protected-broadcast android:name="com.oneplus.shit.settings.UPDATE_SLIDER_POSITION" />
 
     <application
         android:icon="@mipmap/ic_launcher_settings"

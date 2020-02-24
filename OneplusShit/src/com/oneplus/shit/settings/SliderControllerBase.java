@@ -17,10 +17,14 @@
 package com.oneplus.shit.settings;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.UserHandle;
 import android.os.Vibrator;
 import android.util.Log;
+import android.os.Vibrator;
 
 import com.oneplus.shit.settings.utils.FileUtils;
+import com.oneplus.shit.settings.ButtonConstants;
 
 public abstract class SliderControllerBase {
 
@@ -54,7 +58,7 @@ public abstract class SliderControllerBase {
 
     protected abstract boolean processAction(int action);
 
-    public final boolean processEvent(int key) {
+    public final boolean processEvent(Context context, int key) {
         if (mActions == null) {
             return false;
         }
@@ -63,12 +67,15 @@ public abstract class SliderControllerBase {
         switch (key) {
             case ButtonConstants.KEY_SLIDER_TOP:
                 processed = processAction(mActions[0]);
+                notifySliderChange(context, processed, 0);
                 break;
             case ButtonConstants.KEY_SLIDER_MIDDLE:
                 processed = processAction(mActions[1]);
+                notifySliderChange(context, processed, 1);
                 break;
             case ButtonConstants.KEY_SLIDER_BOTTOM:
                 processed = processAction(mActions[2]);
+                notifySliderChange(context, processed, 2);
                 break;
         }
 
@@ -77,6 +84,19 @@ public abstract class SliderControllerBase {
         }
 
         return processed;
+    }
+
+    private void notifySliderChange(Context context, boolean processed, int position) {
+        if (processed)
+            sendUpdateBroadcast(context, position);
+    }
+
+    public static void sendUpdateBroadcast(Context context, int position) {
+        Intent intent = new Intent(ButtonConstants.ACTION_UPDATE_SLIDER_POSITION);
+        intent.putExtra(ButtonConstants.EXTRA_SLIDER_POSITION, position);
+        context.sendBroadcastAsUser(intent, UserHandle.CURRENT);
+        intent.setFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY);
+        Log.d(TAG, "slider change to positon " + position);
     }
 
     public abstract void reset();

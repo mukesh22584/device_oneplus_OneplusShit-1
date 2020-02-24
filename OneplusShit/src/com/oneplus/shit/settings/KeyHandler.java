@@ -276,7 +276,7 @@ public class KeyHandler implements DeviceKeyHandler {
 
         int scanCode = event.getScanCode();
         if (mSliderController != null &&
-                mSliderController.processEvent(scanCode)) {
+                mSliderController.processEvent(mContext, scanCode)) {
             return null;
         }
 

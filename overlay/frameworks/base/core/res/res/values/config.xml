@@ -30,4 +30,6 @@
 		<item>com.oneplus.shit.settings.KeyHandler</item>
     </string-array>
 
+    <!-- Whether key handler sends intent when changing slider position -->
+    <string name="config_alertSliderIntent">com.oneplus.shit.settings.UPDATE_SLIDER_POSITION</string>
 </resources>
