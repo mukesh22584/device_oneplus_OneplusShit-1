@@ -78,7 +78,7 @@
   	         <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <!-- Dirac Sounds -->
+        <!-- Dirac Sounds
         <activity
             android:name="com.oneplus.shit.settings.dirac.DiracActivity"
             android:excludeFromRecents="true"
@@ -87,7 +87,7 @@
                  <action android:name="android.intent.action.MAIN" />
                  <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>
+        </activity>-->
         <!-- OnePlus Panel Modes -->
         <activity
             android:name="com.oneplus.shit.settings.PanelSettingsActivity"
@@ -118,7 +118,7 @@
                     android:name="android.service.quicksettings.action.QS_TILE"/>
             </intent-filter>
         </service>
-        <service
+        <!--<service
             android:name="com.oneplus.shit.settings.SpectrumTileService" 
             android:icon="@drawable/ic_spectrum" 
             android:label="@string/spectrum_title" 
@@ -127,7 +127,7 @@
                 <action 
                 android:name="android.service.quicksettings.action.QS_TILE"/>
             </intent-filter>
-        </service>
+        </service>-->
         <service android:name="com.oneplus.shit.settings.AutoHighBrightnessModeService" />
         <receiver android:name="com.oneplus.shit.settings.Startup" >
             <intent-filter android:priority="100" >

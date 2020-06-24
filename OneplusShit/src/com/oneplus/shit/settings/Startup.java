@@ -87,7 +87,7 @@ public class Startup extends BroadcastReceiver {
         VibratorCallStrengthPreference.restore(context);
         VibratorNotifStrengthPreference.restore(context);
         DisplayCalibration.restore(context);
-        new DiracUtils(context).onBootCompleted();
+        //new DiracUtils(context).onBootCompleted();
         FileUtils.enableService(context);
     }
 
