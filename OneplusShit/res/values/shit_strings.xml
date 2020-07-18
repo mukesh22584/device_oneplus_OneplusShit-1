@@ -228,7 +228,7 @@
     <string name="hbm_autobrightness_summary"></string>
     <string name="hbm_autobrightness_title">Automatic High brightness mode</string>
     <string name="hbm_autobrightness_threshold_summary"></string>
-    <string name="hbm_autobrightness_threshold_title">Automatic High brightness mode threshold (lux)</string>
+    <string name="hbm_autobrightness_threshold_title">Automatic HBM threshold (lux)</string>
 
     <!-- Screen off Gestures : Input -->
     <string name="touchscreen_gesture_settings_title">Shitty Gestures</string>
