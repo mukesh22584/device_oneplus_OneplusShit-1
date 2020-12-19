@@ -59,7 +59,7 @@
 
         <activity android:name="com.oneplus.shit.settings.KeyHandler" />
 		
-        <!-- Gestures Settings -->
+        <!-- Gestures Settings 
 	<activity
             android:name="com.oneplus.shit.settings.ScreenOffGestureSettings"
             android:excludeFromRecents="true"
@@ -68,7 +68,7 @@
 	        <action android:name="android.intent.action.MAIN" />
     	        <category android:name="android.intent.category.DEFAULT" />
           </intent-filter>
-	</activity>
+	</activity> -->
         <!-- Display Calibration -->
         <activity
             android:name="com.oneplus.shit.settings.DisplayCalibration"
