@@ -16,7 +16,16 @@
 
 package com.oneplus.shit.settings;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ButtonConstants {
+
+    public static final String ACTION_UPDATE_SLIDER_SETTINGS
+            = "com.oneplus.shit.settings.UPDATE_SLIDER_SETTINGS";
+
+    public static final String ACTION_UPDATE_SLIDER_POSITION
+            = "com.oneplus.shit.settings.UPDATE_SLIDER_POSITION";
 
     // Preference keys
     public static final String SLIDER_PANEL_KEY = "notification_slider";
@@ -41,14 +50,13 @@ public class ButtonConstants {
     public static final int KEY_SLIDER_MIDDLE = 602;
     public static final int KEY_SLIDER_BOTTOM = 603;
 
-    public static final String ACTION_UPDATE_SLIDER_SETTINGS
-            = "com.oneplus.shit.settings.UPDATE_SLIDER_SETTINGS";
-
-    public static final String ACTION_UPDATE_SLIDER_POSITION
-            = "com.oneplus.shit.settings.UPDATE_SLIDER_POSITION";
-
     public static final String EXTRA_SLIDER_USAGE = "usage";
     public static final String EXTRA_SLIDER_ACTIONS = "actions";
     public static final String EXTRA_SLIDER_POSITION = "position";
 
+    // Holds <preference_key> -> <proc_node> mapping
+    static final Map<String, String> sStringNodePreferenceMap = new HashMap<>();
+
+    // Holds <preference_key> -> <default_values> mapping
+    static final Map<String, Object> sNodeDefaultMap = new HashMap<>();
 }

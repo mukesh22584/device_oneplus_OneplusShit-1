@@ -28,12 +28,19 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragment;
 import androidx.preference.PreferenceScreen;
 import androidx.preference.PreferenceCategory;
+import androidx.preference.Preference.OnPreferenceChangeListener;
+import androidx.preference.PreferenceGroup;
 import androidx.preference.SwitchPreference;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.util.Arrays;
 
-public class ButtonSettingsFragment extends NodePreferenceFragment {
+import com.oneplus.shit.settings.utils.FileUtils;
+
+public class ButtonSettingsFragment extends PreferenceFragment
+                             implements Preference.OnPreferenceChangeListener {
+
     private static final String TAG = "ButtonSettingsFragment";
 
     @Override
@@ -78,8 +85,15 @@ public class ButtonSettingsFragment extends NodePreferenceFragment {
             case ButtonConstants.SLIDER_ACTION_BOTTOM_KEY:
                 return notifySliderActionChange(2, (String) newValue);
             default:
-                return super.onPreferenceChange(preference, newValue);
+                break;
         }
+
+        String node = ButtonConstants.sStringNodePreferenceMap.get(key);
+        if (!TextUtils.isEmpty(node) && FileUtils.isFileWritable(node)) {
+            FileUtils.writeLine(node, (String) newValue);
+            return true;
+        }
+        return false;
     }
 
     private boolean handleSliderUsageChange(String newValue) {
@@ -114,6 +128,34 @@ public class ButtonSettingsFragment extends NodePreferenceFragment {
                         R.array.notification_slider_caffeine_entry_values);
             default:
                 return false;
+        }
+    }
+
+    @Override
+    public void addPreferencesFromResource(int preferencesResId) {
+        super.addPreferencesFromResource(preferencesResId);
+        // Initialize node preferences
+        for (String pref : ButtonConstants.sStringNodePreferenceMap.keySet()) {
+            ListPreference l = (ListPreference) findPreference(pref);
+            if (l == null) continue;
+            String node = ButtonConstants.sStringNodePreferenceMap.get(pref);
+            if (FileUtils.isFileReadable(node)) {
+                l.setValue(FileUtils.readOneLine(node));
+                l.setOnPreferenceChangeListener(this);
+            } else {
+                removePref(l);
+            }
+        }
+    }
+
+    private void removePref(Preference pref) {
+        PreferenceGroup parent = pref.getParent();
+        if (parent == null) {
+            return;
+        }
+        parent.removePreference(pref);
+        if (parent.getPreferenceCount() == 0) {
+            removePref(parent);
         }
     }
 

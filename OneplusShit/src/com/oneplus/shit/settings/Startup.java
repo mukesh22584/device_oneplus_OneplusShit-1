@@ -28,8 +28,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import androidx.preference.PreferenceManager;
 
-import com.oneplus.shit.settings.KernelControl;
-import com.oneplus.shit.settings.ScreenOffGesture;
 import com.oneplus.shit.settings.DCDimSwitch;
 import com.oneplus.shit.settings.DCIModeSwitch;
 import com.oneplus.shit.settings.DisplayCalibration;
@@ -69,15 +67,6 @@ public class Startup extends BroadcastReceiver {
         final String action = intent.getAction();
             ButtonSettingsActivity.restoreState(context);
 
-        if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
-                enableComponent(context, ScreenOffGesture.class.getName());
-                SharedPreferences screenOffGestureSharedPreferences = context.getSharedPreferences(
-                        ScreenOffGesture.GESTURE_SETTINGS, Activity.MODE_PRIVATE);
-                KernelControl.enableGestures(
-                        screenOffGestureSharedPreferences.getBoolean(
-                        ScreenOffGesture.PREF_GESTURE_ENABLE, true));
-         }
-
         boolean enabled = sharedPrefs.getBoolean(ShitPanelSettings.KEY_SRGB_SWITCH, false);
         restore(SRGBModeSwitch.getFile(), enabled);
         enabled = sharedPrefs.getBoolean(ShitPanelSettings.KEY_HBM_SWITCH, false);
@@ -94,21 +83,5 @@ public class Startup extends BroadcastReceiver {
         DisplayCalibration.restore(context);
         new DiracUtils(context).onBootCompleted();
         FileUtils.enableService(context);
-    }
-
-    private boolean getPreferenceBoolean(Context context, String key, boolean defaultValue) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return preferences.getBoolean(key, defaultValue);
-    }
-
-    private void enableComponent(Context context, String component) {
-        ComponentName name = new ComponentName(context, component);
-        PackageManager pm = context.getPackageManager();
-        if (pm.getComponentEnabledSetting(name)
-                == PackageManager.COMPONENT_ENABLED_STATE_DISABLED) {
-            pm.setComponentEnabledSetting(name,
-                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                    PackageManager.DONT_KILL_APP);
-        }
     }
 }
